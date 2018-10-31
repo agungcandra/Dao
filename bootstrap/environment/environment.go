@@ -35,7 +35,7 @@ var (
 
 // Init environment
 func initialize() {
-	gotenv.Load(".env")
+	gotenv.Load(os.Getenv("GOPATH") + "\\src\\github.com\\agungcandra\\dao\\.env")
 	DATABASEHOST = databaseHost()
 	DATABASEPORT = databasePort()
 	DATABASENAME = databaseName()
@@ -61,6 +61,11 @@ func IsProduction() bool {
 }
 
 func databaseHost() string {
+	host := env("DATABASE_HOST")
+
+	if host != "" {
+		return host
+	}
 	return env("DATABASE_HOST")
 }
 
