@@ -33,9 +33,9 @@ var (
 	ENVIRONMENT string
 )
 
-func init() {
-	gotenv.Load(os.Getenv("../../.env"))
-
+// Init environment
+func initialize() {
+	gotenv.Load(".env")
 	DATABASEHOST = databaseHost()
 	DATABASEPORT = databasePort()
 	DATABASENAME = databaseName()
@@ -47,7 +47,7 @@ func init() {
 }
 
 func Load() {
-
+	initialize()
 }
 
 // IsDevelopment : Check whether application run in development mode
@@ -92,7 +92,7 @@ func databaseTimeout() int {
 }
 
 func environment() string {
-	return env("environment")
+	return env("ENV")
 }
 
 func env(key string) string {

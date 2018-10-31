@@ -6,6 +6,7 @@ import (
 	"log"
 
 	"github.com/agungcandra/dao/bootstrap/environment"
+	_ "github.com/go-sql-driver/mysql" // MySQL Driver
 )
 
 // Connection : Connection variable
@@ -16,12 +17,14 @@ func Connect() {
 	var datasource = fmt.Sprintf("%s:%s@tcp(%s:%d)/%s", environment.DATABASEUSERNAME, environment.DATABASEPASSWORD, environment.DATABASEHOST, environment.DATABASEPORT, environment.DATABASENAME)
 	conn, err := sql.Open("mysql", datasource)
 
+	conn.SetMaxIdleConns(0)
+	// conn.Ping()
 	if err != nil {
+		fmt.Println(err)
 		log.Fatalln(err)
 	}
 
 	connection = conn
-	defer connection.Close()
 }
 
 // GetConnection : Get connection
